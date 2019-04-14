@@ -1,0 +1,26 @@
+{
+  "./images/img_1.jpg": [{ "petrosyan": [113, 353, 188, 278] }],
+  "./images/img_2.jpg": [{ "uteshev": [236, 514, 325, 424] }],
+  "./images/img_3.jpg": [
+    { "zhuk": [140, 808, 247, 700] },
+    { "petrosyan": [140, 641, 247, 533] }
+  ],
+  "./images/img_4.jpg": [{ "petrosyan": [232, 667, 294, 605] }],
+  "./images/img_5.jpg": [{ "petrosyan": [184, 626, 246, 563] }],
+  "./images/img_6.jpg": [
+    { "zhuk": [118, 256, 161, 213] },
+    { "karelin": [206, 872, 295, 782] }
+  ],
+  "./images/img_7.jpg": [{ "uteshev": [72, 162, 146, 88] }],
+
+  "./images/img_8.jpg": [{ "ruslan": [92, 199, 199, 91] }],
+  "./images/img_9.jpg": [
+    { "uteshev": [280, 394, 331, 343] },
+    { "ruslan": [297, 533, 349, 481] }
+  ],
+  "./images/img_10.jpg": [
+    {
+      "uteshev": [163, 411, 237, 337]
+    }
+  ]
+}
