@@ -1,11 +1,31 @@
-class manager {
-  constructor() {}
+const fs = require("fs");
 
-  update_faces(img_path) {}
+class Manager {
+  constructor() {
+    let rawdata = fs.readFileSync("./data/faces.json");
+    this.data = JSON.parse(rawdata);
+  }
 
-  get_faces(img_path) {}
+  update_faces(img_path, new_faces) {
+    if (!(img_path in this.data)) return;
 
-  get_pathes() {}
+    this.data[img_path] = new_faces;
+  }
+
+  get_faces(img_path) {
+    if (!(img_path in this.data)) return [];
+    return Array.from(this.data[img_path]);
+  }
+
+  get_pathes() {
+    return Object.keys(this.data);
+  }
+
+  get_data() {
+    return Object.assign({}, this.data); // we need this to return a copy of our data
+  }
+
+  update_db() {}
 }
 
-export default manager;
+module.exports = Manager;
