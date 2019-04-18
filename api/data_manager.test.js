@@ -54,7 +54,7 @@ test("updating faces", () => {
   expect(manager.get_faces("./images/img_1.jpg")).toEqual(faces);
 });
 
-test("proper refactor", () => {
+test("proper absolute path", () => {
   manager.gen_absolute_pathes();
 
   let new_pathes = [
@@ -63,4 +63,14 @@ test("proper refactor", () => {
     path.join(__dirname, "./data", "./images/img_3.jpg")
   ];
   expect(manager.get_pathes()).toEqual(new_pathes);
+});
+
+test("proper relative path", () => {
+  manager.gen_relative_pathes();
+  let pathes = manager.get_pathes();
+  expect(pathes).toEqual([
+    "./images/img_1.jpg",
+    "./images/img_2.jpg",
+    "./images/img_3.jpg"
+  ]);
 });

@@ -35,6 +35,14 @@ class Manager {
       delete this.data[img_path];
     }
   }
+
+  gen_relative_pathes() {
+    for (let img_path in this.data) {
+      let img_name = "./images/" + path.basename(img_path);
+      this.data[img_name] = this.data[img_path];
+      delete this.data[img_path];
+    }
+  }
 }
 
 module.exports = Manager;
