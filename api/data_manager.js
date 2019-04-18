@@ -28,7 +28,7 @@ class Manager {
 
   update_db() {}
 
-  refactor_pathes() {
+  gen_absolute_pathes() {
     for (let img_path in this.data) {
       let new_path = path.join(__dirname, "./data", img_path);
       this.data[new_path] = this.data[img_path];

@@ -55,7 +55,7 @@ test("updating faces", () => {
 });
 
 test("proper refactor", () => {
-  manager.refactor_pathes();
+  manager.gen_absolute_pathes();
 
   let new_pathes = [
     path.join(__dirname, "./data", "./images/img_1.jpg"),
