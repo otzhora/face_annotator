@@ -1,8 +1,9 @@
 const fs = require("fs");
+const path = require("path");
 
 class Manager {
-  constructor() {
-    let rawdata = fs.readFileSync("./data/faces.json");
+  constructor(imgs_path = "./data/faces.json") {
+    let rawdata = fs.readFileSync(imgs_path);
     this.data = JSON.parse(rawdata);
   }
 
@@ -22,10 +23,18 @@ class Manager {
   }
 
   get_data() {
-    return Object.assign({}, this.data); // we need this to return a copy of our data
+    return Object.assign({}, this.data);
   }
 
   update_db() {}
+
+  refactor_pathes() {
+    for (let img_path in this.data) {
+      let new_path = path.join(__dirname, "./data", img_path);
+      this.data[new_path] = this.data[img_path];
+      delete this.data[img_path];
+    }
+  }
 }
 
 module.exports = Manager;
