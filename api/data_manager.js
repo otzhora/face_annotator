@@ -1,10 +1,23 @@
 const fs = require("fs");
 const path = require("path");
+const MongoClient = require("mongodb").MongoClient;
+const uri =
+  "mongodb+srv://dbFaceAnnotations:MongodbPassword@faceannotatordb-bupak.gcp.mongodb.net/test?retryWrites=true";
 
 class Manager {
-  constructor(imgs_path = "./data/faces.json") {
-    let rawdata = fs.readFileSync(imgs_path);
-    this.data = JSON.parse(rawdata);
+  constructor(debug = false, imgs_path = "./data/faces.json") {
+    this.client = new MongoClient(uri, { useNewUrlParser: true });
+    if (debug) {
+      let rawdata = fs.readFileSync(imgs_path);
+      this.data = JSON.parse(rawdata);
+      return this;
+    }
+    this.data = {};
+    return this;
+  }
+
+  async load_annotations() {
+    this.client.connect(err => {});
   }
 
   update_faces(img_path, new_faces) {

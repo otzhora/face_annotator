@@ -1,7 +1,7 @@
 const Manager = require("./data_manager");
 const path = require("path");
 
-manager = new Manager("./data/faces_test.json");
+manager = new Manager(true, "./data/faces_test.json");
 
 test("proper loading", () => {
   let data = manager.get_data();
