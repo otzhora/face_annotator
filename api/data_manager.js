@@ -10,6 +10,7 @@ class Manager {
     this.client = new MongoClient(this.uri, { useNewUrlParser: true });
     this.debug = debug;
     this.data = {};
+    this.pathes = [];
     return this;
   }
 
@@ -27,6 +28,8 @@ class Manager {
       .forEach(e => {
         this.data[e["_id"]] = e;
       });
+
+    for (let key in this.data) this.pathes.push(this.data[key]["path"]);
   }
 
   update_faces(img_path, new_faces) {
@@ -41,7 +44,7 @@ class Manager {
   }
 
   get_pathes() {
-    return Object.keys(this.data);
+    return Array.from(this.pathes);
   }
 
   get_data() {
@@ -71,10 +74,7 @@ class Manager {
 (async () => {
   const manager = new Manager();
   await manager.load_annotations();
-  console.log(manager.get_data());
-  console.log(manager.get_data());
-  console.log(manager.get_data());
-  console.log(manager.get_data());
+  console.log(manager.get_pathes());
 })();
 
 module.exports = Manager;
