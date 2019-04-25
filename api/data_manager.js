@@ -1,23 +1,32 @@
 const fs = require("fs");
 const path = require("path");
 const MongoClient = require("mongodb").MongoClient;
-const uri =
-  "mongodb+srv://dbFaceAnnotations:MongodbPassword@faceannotatordb-bupak.gcp.mongodb.net/test?retryWrites=true";
 
 class Manager {
-  constructor(debug = false, imgs_path = "./data/faces.json") {
-    this.client = new MongoClient(uri, { useNewUrlParser: true });
-    if (debug) {
-      let rawdata = fs.readFileSync(imgs_path);
-      this.data = JSON.parse(rawdata);
-      return this;
-    }
+  constructor(debug = false) {
+    this.uri =
+      "mongodb+srv://dbFaceAnnotations:MongodbPassword@faceannotatordb-bupak.gcp.mongodb.net/test?retryWrites=true";
+
+    this.client = new MongoClient(this.uri, { useNewUrlParser: true });
+    this.debug = debug;
     this.data = {};
     return this;
   }
 
   async load_annotations() {
-    this.client.connect(err => {});
+    const collectionName = this.debug
+      ? "FaceAnnotationsCODebug"
+      : "FaceAnnotationsCO";
+
+    await this.client.connect();
+
+    await this.client
+      .db("FaceAnnotatorDB")
+      .collection(collectionName)
+      .find({})
+      .forEach(e => {
+        this.data[e["_id"]] = e;
+      });
   }
 
   update_faces(img_path, new_faces) {
@@ -36,6 +45,7 @@ class Manager {
   }
 
   get_data() {
+    //await this.load_annotations();
     return Object.assign({}, this.data);
   }
 
@@ -57,5 +67,14 @@ class Manager {
     }
   }
 }
+
+(async () => {
+  const manager = new Manager();
+  await manager.load_annotations();
+  console.log(manager.get_data());
+  console.log(manager.get_data());
+  console.log(manager.get_data());
+  console.log(manager.get_data());
+})();
 
 module.exports = Manager;
