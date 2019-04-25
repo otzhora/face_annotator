@@ -27,6 +27,7 @@ class Manager {
       .find({})
       .forEach(e => {
         this.data[e["_id"]] = e;
+        this.data[e["_id"]]["_id"] = this.data[e["_id"]]["_id"].toString();
       });
 
     for (let key in this.data) this.pathes.push(this.data[key]["path"]);
@@ -68,15 +69,11 @@ class Manager {
     this.pathes = [];
     for (let key in this.data) this.pathes.push(this.data[key]["path"]);
   }
-}
 
-(async () => {
-  const manager = new Manager();
-  await manager.load_annotations();
-  manager.gen_absolute_pathes();
-  console.log(manager.get_pathes());
-  manager.gen_relative_pathes();
-  console.log(manager.get_pathes());
-})();
+  close() {
+    console.log("closing");
+    this.client.close();
+  }
+}
 
 module.exports = Manager;
