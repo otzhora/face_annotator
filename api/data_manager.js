@@ -33,10 +33,18 @@ class Manager {
     for (let key in this.data) this.pathes.push(this.data[key]["path"]);
   }
 
-  update_faces(_id, new_faces) {
+  async update_faces(_id, new_faces) {
     if (!(_id in this.data)) return;
 
+    const collectionName = this.debug
+      ? "FaceAnnotationsCODebug"
+      : "FaceAnnotationsCO";
+
     this.data[_id]["faces"] = new_faces;
+    await this.client
+      .db("FaceAnnotatorDB")
+      .collection(collectionName)
+      .update({ _id: _id }, this.data[_id]);
   }
 
   get_faces(_id) {
