@@ -32,15 +32,15 @@ class Manager {
     for (let key in this.data) this.pathes.push(this.data[key]["path"]);
   }
 
-  update_faces(img_path, new_faces) {
-    if (!(img_path in this.data)) return;
+  update_faces(_id, new_faces) {
+    if (!(_id in this.data)) return;
 
-    this.data[img_path] = new_faces;
+    this.data[_id]["faces"] = new_faces;
   }
 
-  get_faces(img_path) {
-    if (!(img_path in this.data)) return [];
-    return Array.from(this.data[img_path]);
+  get_faces(_id) {
+    if (!(_id in this.data)) return [];
+    return Array.from(this.data[_id]["faces"]);
   }
 
   get_pathes() {
@@ -48,32 +48,34 @@ class Manager {
   }
 
   get_data() {
-    //await this.load_annotations();
     return Object.assign({}, this.data);
   }
 
-  update_db() {}
-
   gen_absolute_pathes() {
-    for (let img_path in this.data) {
-      let new_path = path.join(__dirname, "./data", img_path);
-      this.data[new_path] = this.data[img_path];
-      delete this.data[img_path];
+    for (let key in this.data) {
+      let new_path = path.join(__dirname, "./data", this.data[key]["path"]);
+      this.data[key]["path"] = new_path;
     }
+    this.pathes = [];
+    for (let key in this.data) this.pathes.push(this.data[key]["path"]);
   }
 
   gen_relative_pathes() {
-    for (let img_path in this.data) {
-      let img_name = "./images/" + path.basename(img_path);
-      this.data[img_name] = this.data[img_path];
-      delete this.data[img_path];
+    for (let key in this.data) {
+      let rel_path = "./images/" + path.basename(this.data[key]["path"]);
+      this.data[key]["path"] = rel_path;
     }
+    this.pathes = [];
+    for (let key in this.data) this.pathes.push(this.data[key]["path"]);
   }
 }
 
 (async () => {
   const manager = new Manager();
   await manager.load_annotations();
+  manager.gen_absolute_pathes();
+  console.log(manager.get_pathes());
+  manager.gen_relative_pathes();
   console.log(manager.get_pathes());
 })();
 
