@@ -53,12 +53,12 @@ manager = new Manager(true);
     done();
   });
 
-  test("updating faces", done => {
+  test("updating faces", async done => {
     let faces = manager.get_faces("5cc205d083e7a796b07dc191");
     let old_faces = manager.get_faces("5cc205d083e7a796b07dc18f");
-    manager.update_faces("5cc205d083e7a796b07dc18f", faces);
+    await manager.update_faces("5cc205d083e7a796b07dc18f", faces);
     expect(manager.get_faces("5cc205d083e7a796b07dc18f")).toEqual(faces);
-    manager.update_faces("5cc205d083e7a796b07dc18f", old_faces);
+    await manager.update_faces("5cc205d083e7a796b07dc18f", old_faces);
     done();
   });
 
