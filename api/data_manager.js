@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const mongodb = require("mongodb");
 const MongoClient = require("mongodb").MongoClient;
 
 class Manager {
@@ -39,12 +40,14 @@ class Manager {
     const collectionName = this.debug
       ? "FaceAnnotationsCODebug"
       : "FaceAnnotationsCO";
-
     this.data[_id]["faces"] = new_faces;
     await this.client
       .db("FaceAnnotatorDB")
       .collection(collectionName)
-      .update({ _id: _id }, this.data[_id]);
+      .updateMany(
+        { _id: new mongodb.ObjectID(_id) },
+        { $set: { faces: new_faces } }
+      );
   }
 
   get_faces(_id) {
