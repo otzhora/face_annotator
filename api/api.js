@@ -19,14 +19,17 @@ const manager = new Manager(true);
 })();
 
 app.get("/images", (req, res) => {
+  console.log("handling get images request");
   res.send(manager.get_data());
 });
 
 app.get("/images/:_id/annotations", (req, res) => {
+  console.log("handling get images/id/annotations request");
   res.send(manager.get_faces(req.params["_id"]));
 });
 
 app.post("/images/:_id/annotations", upload.array(), (req, res) => {
+  console.log("handling post images/id/annotations request");
   let faces = req.body["faces"];
   manager
     .update_faces(req.params._id, faces)
