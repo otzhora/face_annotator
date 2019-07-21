@@ -1,48 +1,69 @@
-const fs = require("fs");
-const path = require("path");
 const mongodb = require("mongodb");
 const MongoClient = require("mongodb").MongoClient;
 
 class Manager {
-  constructor(debug = false) {
-    this.uri =
-      "mongodb+srv://dbFaceAnnotations:MongodbPassword@faceannotatordb-bupak.gcp.mongodb.net/test?retryWrites=true";
+  constructor(
+    debug = false,
+    user_name,
+    user_password,
+    cluster_location,
+    db_name,
+    collectionName
+  ) {
+    this.user_name = user_name || "dbAnnotationUser";
+    this.user_password = user_password || "dbAnnotationPassword";
+    this.cluster_location =
+      cluster_location || "cluster0-zmdg3.gcp.mongodb.net";
+    this.url = `mongodb+srv://${this.user_name}:${this.user_password}@${
+      this.cluster_location
+    }/test?retryWrites=true&w=majority`;
+    this.db_name = db_name || "pm-anniversary";
+    this.collectionName = collectionName || "faceAnnotations";
 
-    this.client = new MongoClient(this.uri, { useNewUrlParser: true });
+    this.client = new MongoClient(this.url, { useNewUrlParser: true });
     this.debug = debug;
     this.data = {};
-    this.pathes = [];
+    this.urls = [];
     return this;
   }
 
-  async load_annotations() {
+  load_annotations() {
     const collectionName = this.debug
-      ? "FaceAnnotationsCODebug"
-      : "FaceAnnotationsCO";
+      ? `${this.collectionName}Debug`
+      : this.collectionName;
 
-    await this.client.connect();
+    return this.client
+      .connect()
+      .then(() => {
+        return this.client
+          .db(this.db_name)
+          .collection(collectionName)
+          .find({})
+          .toArray();
+      })
+      .then(annotations => {
+        for (let i = 0; i < annotations.length; i++) {
+          let id = annotations[i]["_id"].toString();
+          this.data[id] = annotations[i];
+        }
 
-    await this.client
-      .db("FaceAnnotatorDB")
-      .collection(collectionName)
-      .find({})
-      .forEach(e => {
-        this.data[e["_id"]] = e;
-        this.data[e["_id"]]["_id"] = this.data[e["_id"]]["_id"].toString();
-      });
+        for (let id in this.data) this.urls.push(this.data[id]["url"]);
 
-    for (let key in this.data) this.pathes.push(this.data[key]["path"]);
+        return Object.assign({}, this.data);
+      })
+      .catch(console.log);
   }
 
-  async update_faces(_id, new_faces) {
+  update_faces(_id, new_faces) {
     if (!(_id in this.data)) return;
 
     const collectionName = this.debug
-      ? "FaceAnnotationsCODebug"
-      : "FaceAnnotationsCO";
+      ? `${this.collectionName}Debug`
+      : this.collectionName;
+
     this.data[_id]["faces"] = new_faces;
-    await this.client
-      .db("FaceAnnotatorDB")
+    return this.client
+      .db(this.db_name)
       .collection(collectionName)
       .updateMany(
         { _id: new mongodb.ObjectID(_id) },
@@ -51,39 +72,20 @@ class Manager {
   }
 
   get_faces(_id) {
-    if (!(_id in this.data)) return [];
-    return Array.from(this.data[_id]["faces"]);
+    if (!(_id in this.data)) return Promise.resolve([]);
+    return Promise.resolve(Array.from(this.data[_id]["faces"]));
   }
 
-  get_pathes() {
-    return Array.from(this.pathes);
+  get_urls() {
+    return Promise.resolve(Array.from(this.urls));
   }
 
   get_data() {
-    return Object.assign({}, this.data);
-  }
-
-  gen_absolute_pathes() {
-    for (let key in this.data) {
-      let new_path = path.join(__dirname, "./data", this.data[key]["path"]);
-      this.data[key]["path"] = new_path;
-    }
-    this.pathes = [];
-    for (let key in this.data) this.pathes.push(this.data[key]["path"]);
-  }
-
-  gen_relative_pathes() {
-    for (let key in this.data) {
-      let rel_path = "./images/" + path.basename(this.data[key]["path"]);
-      this.data[key]["path"] = rel_path;
-    }
-    this.pathes = [];
-    for (let key in this.data) this.pathes.push(this.data[key]["path"]);
+    return Promise.resolve(Object.assign({}, this.data));
   }
 
   close() {
-    console.log("closing");
-    this.client.close();
+    return this.client.close();
   }
 }
 
