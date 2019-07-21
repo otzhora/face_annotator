@@ -61,14 +61,16 @@ class Manager {
       ? `${this.collectionName}Debug`
       : this.collectionName;
 
-    this.data[_id]["faces"] = new_faces;
     return this.client
       .db(this.db_name)
       .collection(collectionName)
       .updateMany(
         { _id: new mongodb.ObjectID(_id) },
         { $set: { faces: new_faces } }
-      );
+      )
+      .then(() => {
+        this.data[_id]["faces"] = new_faces;
+      });
   }
 
   get_faces(_id) {
