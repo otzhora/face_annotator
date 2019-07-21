@@ -1,95 +1,87 @@
 const Manager = require("./data_manager");
-const path = require("path");
-
-manager = new Manager(true);
+const mongodb = require("mongodb");
 
 (() => {
-  test("proper loading", async done => {
-    await manager.load_annotations();
-    let data = manager.get_data();
-    expect(data).toEqual({
-      "5cc205d083e7a796b07dc18f": {
-        _id: "5cc205d083e7a796b07dc18f",
-        path: "./images/img_1.jpg",
-        faces: [{ petrosyan: [113, 353, 188, 278] }]
-      },
-      "5cc205d083e7a796b07dc190": {
-        _id: "5cc205d083e7a796b07dc190",
-        path: "./images/img_2.jpg",
-        faces: [{ uteshev: [236, 514, 325, 424] }]
-      },
-      "5cc205d083e7a796b07dc191": {
-        _id: "5cc205d083e7a796b07dc191",
-        path: "./images/img_3.jpg",
-        faces: [
-          { zhuk: [140, 808, 247, 700] },
-          { petrosyan: [140, 641, 247, 533] }
-        ]
+  test("proper loading", done => {
+    let manager = new Manager(true);
+    manager
+      .load_annotations()
+      .then(data => {
+        expect(data).toEqual({
+          "5d34c74f13877249f331bad3": {
+            _id: mongodb.ObjectID("5d34c74f13877249f331bad3"),
+            url: "photos/img_1.jpg",
+            faces: [
+              {
+                petrosyan: [113, 353, 188, 278]
+              }
+            ]
+          },
+          "5d34c74f13877249f331bad4": {
+            _id: mongodb.ObjectID("5d34c74f13877249f331bad4"),
+            url: "photos/img_2.jpg",
+            faces: [
+              {
+                uteshev: [236, 514, 325, 424]
+              }
+            ]
+          },
+          "5d34c74f13877249f331bad5": {
+            _id: mongodb.ObjectID("5d34c74f13877249f331bad5"),
+            url: "photos/img_3.jpg",
+            faces: [
+              {
+                zhuk: [140, 808, 247, 700]
+              },
+              {
+                petrosyan: [140, 641, 247, 533]
+              }
+            ]
+          }
+        });
+        return manager.close();
+      })
+      .then(() => {
+        done();
+      });
+  });
+
+  test("updating faces", async done => {
+    let faces1 = [
+      {
+        petrosyan: [113, 353, 188, 278]
       }
-    });
-    done();
-  });
-
-  test("proper pathes", done => {
-    let pathes = manager.get_pathes();
-    expect(pathes).toEqual([
-      "./images/img_1.jpg",
-      "./images/img_2.jpg",
-      "./images/img_3.jpg"
-    ]);
-    done();
-  });
-
-  test("proper faces", done => {
-    let faces = manager.get_faces("5cc205d083e7a796b07dc191");
-    expect(faces).toEqual([
+    ];
+    let faces2 = [
       {
         zhuk: [140, 808, 247, 700]
       },
       {
         petrosyan: [140, 641, 247, 533]
       }
-    ]);
-    done();
-  });
-
-  test("updating faces", async done => {
-    let faces = manager.get_faces("5cc205d083e7a796b07dc191");
-    let old_faces = manager.get_faces("5cc205d083e7a796b07dc18f");
-    await manager.update_faces("5cc205d083e7a796b07dc18f", faces);
-    expect(manager.get_faces("5cc205d083e7a796b07dc18f")).toEqual(faces);
-    await manager.update_faces("5cc205d083e7a796b07dc18f", old_faces);
-    done();
-  });
-
-  test("proper absolute path", done => {
-    manager.gen_absolute_pathes();
-
-    let new_pathes = [
-      path.join(__dirname, "./data", "./images/img_1.jpg"),
-      path.join(__dirname, "./data", "./images/img_2.jpg"),
-      path.join(__dirname, "./data", "./images/img_3.jpg")
     ];
-    expect(manager.get_pathes()).toEqual(new_pathes);
-    done();
-  });
 
-  test("proper relative path", async done => {
-    manager.gen_relative_pathes();
-    let pathes = manager.get_pathes();
-    expect(pathes).toEqual([
-      "./images/img_1.jpg",
-      "./images/img_2.jpg",
-      "./images/img_3.jpg"
-    ]);
-
-    done();
-  });
-
-  test("close", done => {
-    manager.close();
-    done();
+    let manager1 = new Manager(true);
+    // img_1
+    manager1
+      .load_annotations()
+      .then(() => {
+        return manager1.update_faces("5d34c74f13877249f331bad3", faces2);
+      })
+      .then(() => {
+        return manager1.get_faces("5d34c74f13877249f331bad3");
+      })
+      .then(faces => {
+        expect(faces).toEqual(faces2);
+        return manager1.update_faces("5d34c74f13877249f331bad3", faces1);
+      })
+      .then(() => {
+        return manager1.get_faces("5d34c74f13877249f331bad3");
+      })
+      .then(faces => {
+        expect(faces).toEqual(faces1);
+        return manager1.close();
+      })
+      .then(() => done());
   });
 })();
-
-manager.close();
