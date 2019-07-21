@@ -1,15 +1,15 @@
 {
-  "./images/img_1.jpg": [
+  "photos/img_1.jpg": [
     {
       "petrosyan": [113, 353, 188, 278]
     }
   ],
-  "./images/img_2.jpg": [
+  "photos/img_2.jpg": [
     {
       "uteshev": [236, 514, 325, 424]
     }
   ],
-  "./images/img_3.jpg": [
+  "photos/img_3.jpg": [
     {
       "zhuk": [140, 808, 247, 700]
     },
