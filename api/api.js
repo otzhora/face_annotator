@@ -24,6 +24,12 @@ app.get("/images", (req, res) => {
   });
 });
 
+app.get("/images/id_list", (req, res) => {
+  manager.get_ids().then(ids => {
+    res.send(ids);
+  });
+});
+
 app.get("/images/:_id/annotations", (req, res) => {
   manager.get_faces(req.params["_id"]).then(face_array => {
     res.send(face_array);
