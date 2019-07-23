@@ -78,6 +78,10 @@ class Manager {
     return Promise.resolve(Array.from(this.data[_id]["faces"]));
   }
 
+  get_ids() {
+    return Promise.resolve(Object.keys(this.data));
+  }
+
   get_url(_id) {
     return Promise.resolve(this.data[_id]["url"]);
   }
