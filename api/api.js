@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const upload = multer();
 const app = express();
-const port = 5001;
+const port = Number(process.argv[2]) || 5001;
 
 app.use(cors());
 app.use(bodyParser.json());
