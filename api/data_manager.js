@@ -90,6 +90,10 @@ class Manager {
     return Promise.resolve(Object.assign({}, this.data));
   }
 
+  get_photo_info(_id) {
+    return Promise.resolve(Object.assign({}, this.data[_id]));
+  }
+
   close() {
     return this.client.close();
   }
