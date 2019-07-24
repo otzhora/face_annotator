@@ -55,7 +55,7 @@ class Manager {
   }
 
   update_faces(_id, new_faces) {
-    if (!(_id in this.data)) return;
+    if (!(_id in this.data)) return Promise.reject("id is not valid");
 
     const collectionName = this.debug
       ? `${this.collectionName}Debug`
@@ -70,11 +70,14 @@ class Manager {
       )
       .then(() => {
         this.data[_id]["faces"] = new_faces;
+      })
+      .catch(err => {
+        return err;
       });
   }
 
   get_faces(_id) {
-    if (!(_id in this.data)) return Promise.resolve([]);
+    if (!(_id in this.data)) return Promise.reject("id is not valid");
     return Promise.resolve(Array.from(this.data[_id]["faces"]));
   }
 
@@ -83,6 +86,7 @@ class Manager {
   }
 
   get_url(_id) {
+    if (!(_id in this.data)) return Promise.reject("id is not valid");
     return Promise.resolve(this.data[_id]["url"]);
   }
 
@@ -91,6 +95,7 @@ class Manager {
   }
 
   get_photo_info(_id) {
+    if (!(_id in this.data)) return Promise.reject("id is not valid");
     return Promise.resolve(Object.assign({}, this.data[_id]));
   }
 

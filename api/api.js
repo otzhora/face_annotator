@@ -31,27 +31,44 @@ app.get("/images/id_list", (req, res) => {
 });
 
 app.get("/images/:_id/annotations", (req, res) => {
-  manager.get_faces(req.params["_id"]).then(face_array => {
-    res.send(face_array);
-  });
+  manager
+    .get_faces(req.params["_id"])
+    .then(face_array => {
+      res.send(face_array);
+    })
+    .catch(err => {
+      res.status(404).send(err);
+    });
 });
 
 app.get("/images/:_id/url", (req, res) => {
-  manager.get_url(req.params["_id"]).then(url => {
-    res.send(url);
-  });
+  manager
+    .get_url(req.params["_id"])
+    .then(url => {
+      res.send(url);
+    })
+    .catch(err => {
+      res.status(404).send(err);
+    });
 });
 
 app.get("/images/:_id", (req, res) => {
-  manager.get_photo_info(req.params["_id"]).then(photo_info => {
-    res.send(photo_info);
-  });
+  manager
+    .get_photo_info(req.params["_id"])
+    .then(photo_info => {
+      res.send(photo_info);
+    })
+    .catch(err => {
+      res.status(404).send(err);
+    });
 });
 
 app.post("/images/:_id/annotations", upload.array(), (req, res) => {
   let faces = req.body["faces"];
   manager
     .update_faces(req.params._id, faces)
-    .then(() => res.send("Oki"))
-    .catch(console.log);
+    .then(() => res.status(201).send())
+    .catch(err => {
+      res.status(404).send(err);
+    });
 });
