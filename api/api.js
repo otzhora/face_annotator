@@ -36,9 +36,15 @@ app.get("/images/:_id/annotations", (req, res) => {
   });
 });
 
+app.get("/images/:_id/url", (req, res) => {
+  manager.get_url(req.params["_id"]).then(url => {
+    res.send(url);
+  });
+});
+
 app.get("/images/:_id", (req, res) => {
-  manager.get_url(req.params["_id"]).then(face_array => {
-    res.send(face_array);
+  manager.get_photo_info(req.params["_id"]).then(photo_info => {
+    res.send(photo_info);
   });
 });
 
