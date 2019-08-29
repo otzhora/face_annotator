@@ -1,18 +1,24 @@
 const axios = require("axios");
 
 class Manager {
-  constructor(url = "http://localhost:5000/") {
+  constructor(url = "http://localhost:5001") {
     this.url = url;
   }
 
   load_id_list() {
-    return axios.get(`${this.url}images/id_list`).then(res => {
+    return axios.get(`${this.url}/images/id_list`).then(res => {
       return res["data"];
     });
   }
 
-  get_faces(id_) {
-    return axios.get(`${this.url}images/${id_}/annotations`).then(res => {
+  get_faces(_id) {
+    return axios.get(`${this.url}/images/${_id}/annotations`).then(res => {
+      return res["data"];
+    });
+  }
+
+  get_url(_id) {
+    return axios.get(`${this.url}/images/${_id}/url`).then(res => {
       return res["data"];
     });
   }
@@ -24,7 +30,7 @@ class Manager {
     const data = JSON.stringify({ faces });
 
     return axios
-      .post(`${this.url}images/${id_}/annotations`, data, options)
+      .post(`${this.url}/images/${id_}/annotations`, data, options)
       .then(res => {
         return res["data"];
       });
