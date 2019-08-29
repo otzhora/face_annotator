@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Annotation :url="url" :id="ids[0]" />
-    <Annotation :url="url" :id="ids[1]" />
-    <Annotation :url="url" :id="ids[2]" />
+    <Annotation :url="url" :id="ids[0]" v-if="!loading" />
+    <Annotation :url="url" :id="ids[1]" v-if="!loading" />
+    <Annotation :url="url" :id="ids[2]" v-if="!loading" />
   </div>
 </template>
 
@@ -15,7 +15,8 @@ export default {
     return {
       manager: null,
       ids: [],
-      url: "http://localhost:5001"
+      url: "http://localhost:5001",
+      loading: false
     };
   },
   components: {
@@ -24,11 +25,12 @@ export default {
   methods: {
     fetchData: async function() {
       this.ids = await this.manager.load_id_list();
-      console.log(this.ids);
+      this.loading = false;
     }
   },
   created() {
     this.manager = new Manager(this.url);
+    this.loading = true;
     this.fetchData();
   }
 };
