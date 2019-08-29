@@ -31,13 +31,12 @@ import VAnnotator from "vue-annotator";
 import Manager from "../data_manager";
 export default {
   name: "Annotation",
+  props: ["url", "id"],
   data() {
     return {
       photo: "",
       annotations: [],
       manager: null,
-      ids: [],
-      url: "http://localhost:5001",
       loading: false
     };
   },
@@ -51,12 +50,10 @@ export default {
     },
     async fetchData() {
       this.loading = true;
-      this.ids = await this.manager.load_id_list();
-
-      let photo_rel_url = await this.manager.get_url(this.ids[0]);
+      let photo_rel_url = await this.manager.get_url(this.id);
       this.photo = `${this.url}/${photo_rel_url}`;
 
-      this.annotations = await this.manager.get_faces(this.ids[0]); // TODO: make get_url and get_faces requests at the same time
+      this.annotations = await this.manager.get_faces(this.id); // TODO: make get_url and get_faces requests at the same time
       for (let item of this.annotations) {
         let name = Object.keys(item)[0];
         let anno = item[name];

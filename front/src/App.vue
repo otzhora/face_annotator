@@ -1,15 +1,35 @@
 <template>
   <div id="app">
-    <Annotation />
+    <Annotation :url="url" :id="ids[0]" />
+    <Annotation :url="url" :id="ids[1]" />
+    <Annotation :url="url" :id="ids[2]" />
   </div>
 </template>
 
 <script>
 import Annotation from "./components/AnnotationsComponent";
+import Manager from "./data_manager";
 export default {
   name: "App",
+  data() {
+    return {
+      manager: null,
+      ids: [],
+      url: "http://localhost:5001"
+    };
+  },
   components: {
     Annotation
+  },
+  methods: {
+    fetchData: async function() {
+      this.ids = await this.manager.load_id_list();
+      console.log(this.ids);
+    }
+  },
+  created() {
+    this.manager = new Manager(this.url);
+    this.fetchData();
   }
 };
 </script>
