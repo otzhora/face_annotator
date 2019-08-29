@@ -8,7 +8,21 @@
       :grid="[1, 1]"
       v-if="!loading"
     >
-      <img draggable="false" :src="this.photo" />
+      <img
+        draggable="false"
+        :src="this.photo"
+        @mouseover="isHovered = true"
+        @mouseleave="isHovered = false"
+      />
+      <div
+        class="overlay"
+        v-for="(item,index) in annotations"
+        :key="index"
+        :class="{active: isHovered}"
+        :style="{top: item.y+'px', left: item.x+'px'}"
+      >
+        <div class="text">{{item.name}}</div>
+      </div>
 
       <rect
         v-for="(item,index) in annotations"
@@ -37,7 +51,8 @@ export default {
       photo: "",
       annotations: [],
       manager: null,
-      loading: false
+      loading: false,
+      isHovered: false
     };
   },
   components: {
@@ -69,6 +84,7 @@ export default {
   },
   created() {
     this.manager = new Manager(this.url);
+    console.log(this.id);
     this.fetchData();
   }
 };
@@ -78,5 +94,16 @@ export default {
 rect,
 polygon {
   fill-opacity: 0;
+}
+
+.overlay {
+  z-index: 100;
+  position: absolute;
+  opacity: 0;
+}
+
+.active {
+  opacity: 1;
+  color: white;
 }
 </style>
