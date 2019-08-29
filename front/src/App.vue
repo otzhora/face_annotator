@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Annotation :url="url" :id="ids[0]" v-if="!loading" />
-    <Annotation :url="url" :id="ids[1]" v-if="!loading" />
-    <Annotation :url="url" :id="ids[2]" v-if="!loading" />
+    <div v-for="(item, idx) in ids" :key="idx">
+      <Annotation :url="url" :id="item" v-if="!loading" />
+    </div>
   </div>
 </template>
 
