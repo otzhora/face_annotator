@@ -34,6 +34,10 @@
         :width="item.width"
         :height="item.height"
         :index="index"
+        @mouseover="isHovered = true"
+        @mouseleave="isHovered = false"
+        @mousedown="isHovered = false"
+        @mouseup="isHovered = true"
       />
 
       <rect slot="drawing" stroke="red" />
