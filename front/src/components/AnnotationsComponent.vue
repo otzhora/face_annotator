@@ -33,6 +33,7 @@
         :y="item.y"
         :width="item.width"
         :height="item.height"
+        :index="index"
       />
 
       <rect slot="drawing" stroke="red" />
@@ -61,7 +62,20 @@ export default {
   methods: {
     annoChanged(e) {
       let attr = e.node.attributes;
-      console.log(attr.x, attr.y, attr.width, attr.height);
+      let idx = Number(attr.index.value);
+      let anno = [
+        Number(attr.y.value),
+        Number(attr.x.value) + Number(attr.width.value),
+        Number(attr.y.value) + Number(attr.height.value),
+        Number(attr.x.value)
+      ];
+      let name = this.annotations[idx].name;
+      this.annotations[idx][name] = anno;
+
+      this.annotations[idx].x = Number(attr.x.value);
+      this.annotations[idx].y = Number(attr.y.value);
+      this.annotations[idx].height = Number(attr.height.value);
+      this.annotations[idx].width = Number(attr.width.value);
     },
     async fetchData() {
       this.loading = true;
@@ -84,7 +98,6 @@ export default {
   },
   created() {
     this.manager = new Manager(this.url);
-    console.log(this.id);
     this.fetchData();
   }
 };
