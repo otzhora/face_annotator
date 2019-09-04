@@ -49,7 +49,6 @@
 <script>
 import VAnnotator from "vue-annotator";
 import Manager from "../data_manager";
-import { constants } from "fs";
 export default {
   name: "Annotation",
   props: ["url", "id"],
@@ -102,16 +101,13 @@ export default {
       this.loading = false;
     },
     sendToServer() {
-      console.log(this.annotations);
       let faces = [];
       for (let item of this.annotations) {
         let name = item.name;
-        console.log(item);
         faces.push({
           [name]: item[name]
         });
       }
-      console.log(faces);
       this.manager.update_faces(this.id, faces);
     }
   },
