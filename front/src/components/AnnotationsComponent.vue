@@ -42,6 +42,7 @@
 
       <rect slot="drawing" stroke="red" />
     </v-annotator>
+    <button @click="sendToServer">Send to server</button>
   </div>
 </template>
 
@@ -98,6 +99,16 @@ export default {
       }
 
       this.loading = false;
+    },
+    sendToServer() {
+      let faces = [];
+      for (let item of this.annotations) {
+        let name = item.name;
+        faces.push({
+          [name]: item[name]
+        });
+      }
+      this.manager.update_faces(this.id, faces);
     }
   },
   created() {
