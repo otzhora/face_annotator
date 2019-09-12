@@ -45,4 +45,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.svg_select_points{
+  display: none;
+}
 </style>
