@@ -1,86 +1,44 @@
 <template>
   <div id="app">
     <div v-if="loading">Loading...</div>
-    <v-annotator
-      @move-end="annoChanged"
-      @resize-end="annoChanged"
-      :minSize="[50, 50]"
-      :grid="[1, 1]"
-      v-if="!loading"
-    >
-      <img
-        draggable="false"
-        :src="this.photo"
-        @mouseover="isHovered = true"
-        @mouseleave="isHovered = false"
+    <div class="container" v-if="!loading">
+      <AnnotationWindow
+        :url="url"
+        :id="id"
+        :photo="photo"
+        :annotations="annotations"
+        v-on:annoChangedEvent="annoChanged"
       />
-      <div
-        class="overlay"
-        v-for="(item,index) in annotations"
-        :key="index"
-        :class="{active: isHovered}"
-        :style="{top: item.y+'px', left: item.x+'px'}"
-      >
-        <div class="text">{{item.name}}</div>
-      </div>
+      <AnnotationSideBar />
+    </div>
 
-      <rect
-        v-for="(item,index) in annotations"
-        :key="index"
-        slot="annotation"
-        stroke="red"
-        :x="item.x"
-        :y="item.y"
-        :width="item.width"
-        :height="item.height"
-        :index="index"
-        @mouseover="isHovered = true"
-        @mouseleave="isHovered = false"
-        @mousedown="isHovered = false"
-        @mouseup="isHovered = true"
-      />
-
-      <rect slot="drawing" stroke="red" />
-    </v-annotator>
     <button @click="sendToServer">Send to server</button>
   </div>
 </template>
 
 <script>
-import VAnnotator from "vue-annotator";
+import AnnotationWindow from "./AnnotationWindow";
+import AnnotationSideBar from "./AnnotationSideBar";
 import Manager from "../data_manager";
+import { setTimeout } from "timers";
 export default {
   name: "Annotation",
   props: ["url", "id"],
   data() {
     return {
-      photo: "",
       annotations: [],
       manager: null,
-      loading: false,
-      isHovered: false
+      loading: true,
+      photo: null
     };
   },
   components: {
-    VAnnotator
+    AnnotationWindow,
+    AnnotationSideBar
   },
   methods: {
     annoChanged(e) {
-      let attr = e.node.attributes;
-      let idx = Number(attr.index.value);
-      let anno = [
-        Number(attr.y.value),
-        Number(attr.x.value) + Number(attr.width.value),
-        Number(attr.y.value) + Number(attr.height.value),
-        Number(attr.x.value)
-      ];
-      let name = this.annotations[idx].name;
-      this.annotations[idx][name] = anno;
-
-      this.annotations[idx].x = Number(attr.x.value);
-      this.annotations[idx].y = Number(attr.y.value);
-      this.annotations[idx].height = Number(attr.height.value);
-      this.annotations[idx].width = Number(attr.width.value);
+      this.annotations = e;
     },
     async fetchData() {
       this.loading = true;
@@ -119,20 +77,4 @@ export default {
 </script>
 
 <style scoped>
-rect,
-polygon {
-  fill-opacity: 0;
-}
-
-.overlay {
-  z-index: 100;
-  position: absolute;
-  opacity: 0;
-}
-
-.active {
-  opacity: 1;
-  color: white;
-}
-
 </style>
