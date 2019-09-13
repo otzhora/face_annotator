@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     ids: [],
-    annotations: {}
+    annotations: {},
+    photos: {}
   },
   getters: {},
   mutations: {
@@ -20,6 +21,12 @@ export default new Vuex.Store({
 
       state["annotations"][id] = annotations;
       console.log(state);
+    },
+    loaded_photo_url(state, payload) {
+      let photo = payload["photo"];
+      let id = payload["id"];
+
+      state.photos[id] = photo;
     }
   },
   actions: {}

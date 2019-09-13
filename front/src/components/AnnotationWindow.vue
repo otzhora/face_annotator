@@ -48,10 +48,12 @@ import VAnnotator from "vue-annotator";
 import Manager from "../data_manager";
 export default {
   name: "AnnotationWindow",
-  props: ["url", "id", "photo", "annotations"],
+  props: ["id"],
   data() {
     return {
-      isHovered: false
+      isHovered: false,
+      annotations: null,
+      photo: null
     };
   },
   components: {
@@ -76,6 +78,10 @@ export default {
       this.annotations[idx].width = Number(attr.width.value);
       this.$emit("annoChangedEvent", this.annotations);
     }
+  },
+  created() {
+    this.photo = this.$store.state.photos[this.id];
+    this.annotations = this.$store.state.annotations[this.id];
   }
 };
 </script>
