@@ -55,7 +55,10 @@ export default {
         item.width = anno[1] - anno[3];
         item.height = anno[2] - anno[0];
       }
-
+      this.$store.commit("loaded_annotations", {
+        id: this.id,
+        anno: this.annotations
+      });
       this.loading = false;
     },
     sendToServer() {

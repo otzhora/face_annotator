@@ -25,6 +25,7 @@ export default {
   methods: {
     fetchData: async function() {
       this.ids = await this.manager.load_id_list();
+      this.$store.commit("loaded_ids", { ids: this.ids });
       this.loading = false;
     }
   },
@@ -45,7 +46,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.svg_select_points{
+.svg_select_points {
   display: none;
 }
 </style>
