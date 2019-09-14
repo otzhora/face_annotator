@@ -85,4 +85,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  justify-content: space-around;
+}
 </style>

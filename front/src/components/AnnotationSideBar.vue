@@ -1,25 +1,25 @@
 <template>
   <div id="app">
-    <div class="container" v-for="(item, index) in annotations" :key="index">
-      <div class="name_input">
-        <div class="name">name:</div>
-        <input type="text" v-model="item['name']" v-on:input="inputTiggered" />
-      </div>
+    <div class="item_container">
+      <div class="container" v-for="(item, index) in annotations" :key="index">
+        <div class="input_container">
+          <div class="name">name:</div>
+          <input type="text" v-model="item['name']" v-on:input="inputTiggered" />
+        </div>
 
-      <div class="coord_input_container">
-        <div class="coord_input">
+        <div class="input_container">
           <div class="coord">x:</div>
           <input type="text" v-model="item['x']" v-on:input="inputTiggered" />
         </div>
-        <div class="coord_input">
+        <div class="input_container">
           <div class="coord">y:</div>
           <input type="text" v-model="item['y']" v-on:input="inputTiggered" />
         </div>
-        <div class="coord_input">
+        <div class="input_container">
           <div class="coord">height:</div>
           <input type="text" v-model="item['height']" v-on:input="inputTiggered" />
         </div>
-        <div class="coord_input">
+        <div class="input_container">
           <div class="coord">width:</div>
           <input type="text" v-model="item['width']" v-on:input="inputTiggered" />
         </div>
@@ -74,4 +74,26 @@ export default {
 </script>
 
 <style scoped>
+.item_container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.container {
+  width: 100%;
+  height: 70%;
+  max-height: 9rem;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.input_container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: space-between;
+}
 </style>
