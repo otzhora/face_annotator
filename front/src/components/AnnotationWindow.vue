@@ -45,7 +45,6 @@
 
 <script>
 import VAnnotator from "vue-annotator";
-import Manager from "../data_manager";
 export default {
   name: "AnnotationWindow",
   props: ["id"],
