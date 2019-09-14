@@ -20,13 +20,18 @@ export default new Vuex.Store({
       let annotations = payload["anno"];
 
       state["annotations"][id] = annotations;
-      console.log(state);
     },
     loaded_photo_url(state, payload) {
       let photo = payload["photo"];
       let id = payload["id"];
 
       state.photos[id] = photo;
+    },
+    updated_annotations(state, payload) {
+      let anno = payload["anno"];
+      let id = payload["id"];
+
+      state.annotations[id] = anno;
     }
   },
   actions: {}

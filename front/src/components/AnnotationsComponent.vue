@@ -3,7 +3,7 @@
     <div v-if="loading">Loading...</div>
     <div class="container" v-if="!loading">
       <AnnotationWindow :id="id" v-on:annoChangedEvent="annoChanged" />
-      <AnnotationSideBar />
+      <AnnotationSideBar :id="id" v-on:annoChangedEvent="annoChanged" />
     </div>
 
     <button @click="sendToServer">Send to server</button>
@@ -14,7 +14,6 @@
 import AnnotationWindow from "./AnnotationWindow";
 import AnnotationSideBar from "./AnnotationSideBar";
 import Manager from "../data_manager";
-import { setTimeout } from "timers";
 export default {
   name: "Annotation",
   props: ["url", "id"],
@@ -31,6 +30,10 @@ export default {
   methods: {
     annoChanged(e) {
       this.annotations = e;
+      this.$store.commit("updated_annotations", {
+        id: this.id,
+        anno: this.annotations
+      });
     },
     async fetchData() {
       this.loading = true;
@@ -67,6 +70,10 @@ export default {
           [name]: item[name]
         });
       }
+      this.$store.commit("updated_annotations", {
+        id: this.id,
+        anno: this.annotations
+      });
       this.manager.update_faces(this.id, faces);
     }
   },
