@@ -24,6 +24,10 @@
           <input type="text" v-model="item['width']" v-on:input="inputTiggered" />
         </div>
       </div>
+
+      <div class="new_annotation_container">
+        <button @click="addNewAnno">add new anno</button>
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +66,16 @@ export default {
         }
       }
       this.$emit("annoChangedEvent", this.annotations);
+    },
+    addNewAnno() {
+      this.annotations.push({
+        name: "new name",
+        "new name": [100, 150, 100, 150],
+        x: 100,
+        y: 100,
+        width: 50,
+        height: 50
+      });
     }
   },
   created() {
