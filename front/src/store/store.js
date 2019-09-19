@@ -7,7 +7,9 @@ export default new Vuex.Store({
   state: {
     ids: [],
     annotations: {},
-    photos: {}
+    photos: {},
+    url: "http://localhost:5001",
+    selected_id: null
   },
   getters: {},
   mutations: {
@@ -25,13 +27,16 @@ export default new Vuex.Store({
       let photo = payload["photo"];
       let id = payload["id"];
 
-      state.photos[id] = photo;
+      state.photos[id] = `${state.url}/${photo}`;
     },
     updated_annotations(state, payload) {
       let anno = payload["anno"];
       let id = payload["id"];
 
       state.annotations[id] = anno;
+    },
+    select_id(state, id) {
+      state.selected_id = id;
     }
   },
   actions: {}

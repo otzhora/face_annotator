@@ -8,7 +8,7 @@
     >
       <img
         draggable="false"
-        :src="this.photo"
+        :src="$store.state.photos[$store.state.selected_id]"
         @mouseover="isHovered = true"
         @mouseleave="isHovered = false"
       />
@@ -76,11 +76,19 @@ export default {
       this.annotations[idx].height = Number(attr.height.value);
       this.annotations[idx].width = Number(attr.width.value);
       this.$emit("annoChangedEvent", this.annotations);
+    },
+    sel_id() {
+      this.photo = this.$store.state.photos[this.$store.state.selected_id];
+      this.annotations = this.$store.state.annotations[
+        this.$store.state.selected_id
+      ];
     }
   },
   created() {
-    this.photo = this.$store.state.photos[this.id];
-    this.annotations = this.$store.state.annotations[this.id];
+    this.photo = this.$store.state.photos[this.$store.state.selected_id];
+    this.annotations = this.$store.state.annotations[
+      this.$store.state.selected_id
+    ];
   }
 };
 </script>

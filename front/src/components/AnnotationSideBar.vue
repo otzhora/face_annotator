@@ -76,10 +76,21 @@ export default {
         width: 50,
         height: 50
       });
+    },
+    sel_id() {
+      this.annotations = this.$store.state["annotations"][
+        this.$store.state.selected_id
+      ];
+      this.name = [];
+      for (let i = 0; i < this.annotations.length; i++) {
+        this.names.push(this.annotations[i].name);
+      }
     }
   },
   created() {
-    this.annotations = this.$store.state["annotations"][this.id];
+    this.annotations = this.$store.state["annotations"][
+      this.$store.state.selected_id
+    ];
     for (let i = 0; i < this.annotations.length; i++) {
       this.names.push(this.annotations[i].name);
     }
