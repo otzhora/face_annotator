@@ -11,6 +11,7 @@
         :src="$store.state.photos[$store.state.selected_id]"
         @mouseover="isHovered = true"
         @mouseleave="isHovered = false"
+        style="left: 0px"
       />
       <div
         class="overlay"

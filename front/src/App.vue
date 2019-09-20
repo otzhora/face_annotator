@@ -54,4 +54,7 @@ export default {
 .svg_select_points {
   display: none;
 }
+.background {
+  display: flex;
+}
 </style>
