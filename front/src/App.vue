@@ -30,7 +30,7 @@ export default {
       this.$store.commit("select_id", this.ids[0]);
       this.loading = false;
     },
-    sel_id(e) {
+    sel_id() {
       this.$children[0].sel_id();
     }
   },
