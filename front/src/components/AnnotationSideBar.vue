@@ -104,6 +104,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: gray;
+  color: black;
 }
 .container {
   width: 100%;
@@ -113,6 +115,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border: solid 2px;
+  border-color: black;
 }
 
 .input_container {

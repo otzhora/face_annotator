@@ -101,6 +101,6 @@ export default {
   display: flex;
   width: 100%;
 
-  justify-content: space-between;
+  justify-content: space-around;
 }
 </style>

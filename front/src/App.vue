@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <header>
+      <img src="./assets/microbo_annotator.png" alt="logo">
+    </header>
     <anno v-if="!loading && $store.state.selected_id" />
 
     <ImageSelector v-if="!loading" @select_id="sel_id" />
@@ -49,7 +52,17 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+header{
+  width: 100%;
+  background: black;
+  height: 40px;
+  text-align: left;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+  padding: 3px;
 }
 .svg_select_points {
   display: none;
