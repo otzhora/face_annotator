@@ -4,6 +4,7 @@ const MongoClient = require("mongodb").MongoClient;
 class Manager {
   constructor(
     debug = false,
+    db_url,
     user_name,
     user_password,
     cluster_location,
@@ -14,9 +15,10 @@ class Manager {
     this.user_password = user_password || "dbAnnotationPassword";
     this.cluster_location =
       cluster_location || "cluster0-zmdg3.gcp.mongodb.net";
-    this.url = `mongodb+srv://${this.user_name}:${this.user_password}@${
-      this.cluster_location
-    }/test?retryWrites=true&w=majority`;
+    this.url =
+      db_url ||
+      `mongodb+srv://${this.user_name}:${this.user_password}@${this.cluster_location}/test?retryWrites=true&w=majority`;
+
     this.db_name = db_name || "pm-anniversary";
     this.collectionName = collectionName || "faceAnnotations";
 

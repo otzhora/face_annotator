@@ -2,6 +2,7 @@ const axios = require("axios");
 
 class Manager {
   constructor(url = "http://localhost:5001") {
+    console.log(url);
     this.url = url;
   }
 

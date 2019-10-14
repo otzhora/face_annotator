@@ -4,7 +4,9 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const upload = multer();
 const app = express();
-const port = Number(process.argv[2]) || 5001;
+const port = Number(process.env.SERVER_PORT) || 5001;
+
+const db_url = process.env.DB_URL;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -12,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("data"));
 
 const Manager = require("./data_manager");
-const manager = new Manager(true);
+const manager = new Manager(true, db_url);
 
 manager.load_annotations().then(() => {
   app.listen(port, () => console.log(`Listening on port ${port}`));

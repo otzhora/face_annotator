@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  front:
+    image: ebiven/vue-cli
+    depends_on:
+      - server
+    env_file: .env
+    environment:
+      - VUE_APP_SERVER_PORT=$SERVER_PORT
+      - VUE_APP_SERVER_URL=$SERVER_URL
+    command: /bin/sh -c "npm install && npm run serve"
+    volumes:
+      - ./../front:/code
+    ports:
+      - $FRONT_PORT:8080
+
+  server:
+    image: node:8.16.1-alpine
+    volumes:
+      - ./../api:/usr/src/app
+    working_dir: /usr/src/app
+    command: /bin/sh -c "npm install && npm run dev"
+    ports:
+      - $SERVER_PORT:5001

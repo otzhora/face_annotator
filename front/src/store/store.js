@@ -1,6 +1,8 @@
 import Vuex from "vuex";
 import Vue from "vue";
-
+const server_port = process.env.VUE_APP_SERVER_PORT || 5000;
+const server_url = process.env.VUE_APP_SERVER_URL || "http://localhost";
+const url = `${server_url}:${server_port}`;
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -8,7 +10,7 @@ export default new Vuex.Store({
     ids: [],
     annotations: {},
     photos: {},
-    url: "http://localhost:5001",
+    url: url,
     selected_id: null
   },
   getters: {},
