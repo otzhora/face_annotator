@@ -31,7 +31,7 @@ export default {
       this.annotations = e;
       this.$store.commit("updated_annotations", {
         id: this.$store.state.selected_id,
-        anno: this.annotations
+        annotations: this.annotations
       });
     },
     async sel_id() {
@@ -68,7 +68,7 @@ export default {
 
       this.$store.commit("loaded_annotations", {
         id: this.$store.state.selected_id,
-        anno: this.annotations
+        annotations: this.annotations
       });
       this.loading = false;
     },
@@ -84,7 +84,7 @@ export default {
       }
       this.$store.commit("updated_annotations", {
         id: this.$store.state.selected_id,
-        anno: this.annotations
+        annotations: this.annotations
       });
       this.manager.update_faces(this.$store.state.selected_id, faces);
     }

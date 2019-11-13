@@ -70,7 +70,7 @@ export default {
     addNewAnno() {
       this.annotations.push({
         name: "new name",
-        "new name": [100, 150, 100, 150],
+        "new name": [100, 150, 150, 100],
         x: 100,
         y: 100,
         width: 50,

@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("data"));
 
-const Manager = require("./data_manager_mongodb");
+const Manager = require("./data_manager_json");
 const manager = new Manager(true);
 
 manager.load_annotations().then(() => {
@@ -29,12 +29,11 @@ app.get("/images/id_list", (req, res) => {
     res.send(ids);
   });
 });
-
 app.get("/images/:_id/annotations", (req, res) => {
   manager
     .get_annotations_by_id(req.params["_id"])
-    .then(anno => {
-      res.send(anno);
+    .then(annotations => {
+      res.send(annotations);
     })
     .catch(err => {
       res.status(404).send(err);
@@ -65,6 +64,7 @@ app.get("/images/:_id", (req, res) => {
 
 app.post("/images/:_id/annotations", upload.array(), (req, res) => {
   let anno = req.body["annotations"];
+
   manager
     .update_annotations(req.params._id, anno)
     .then(() => res.status(201).send())

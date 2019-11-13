@@ -60,9 +60,12 @@ class Manager {
     return this.client
       .db(this.db_name)
       .collection(collectionName)
-      .updateMany({ _id: new mongodb.ObjectID(_id) }, { $set: { faces: anno } })
+      .updateMany(
+        { _id: new mongodb.ObjectID(_id) },
+        { $set: { annotations: anno } }
+      )
       .then(() => {
-        this.data[_id]["faces"] = anno;
+        this.data[_id]["annotations"] = anno;
       })
       .catch(err => {
         return err;

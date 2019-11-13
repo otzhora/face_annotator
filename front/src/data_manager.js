@@ -28,8 +28,8 @@ class Manager {
     const options = {
       headers: { "content-type": "application/json" }
     };
-    const data = JSON.stringify({ faces });
-
+    const data = JSON.stringify({ annotations: faces });
+    console.log(data);
     return axios
       .post(`${this.url}/images/${id_}/annotations`, data, options)
       .then(res => {
