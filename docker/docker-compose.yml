@@ -10,7 +10,7 @@ services:
       - VUE_APP_SERVER_URL=$SERVER_URL
     command: /bin/sh -c "npm install && npm run serve"
     volumes:
-      - ./../front:/code
+      - ./../frontend:/code
     ports:
       - $FRONT_PORT:8080
 
