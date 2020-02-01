@@ -31,18 +31,21 @@
 
     <v-content>
       <v-annotator>
-        <img draggable="false" src="http://localhost:5001/photos/img_1.jpg" />
+        <img draggable="false" :src="url" />
 
         <rect slot="annotation" stroke="red" x="20" y="20" width="50" height="50" />
 
         <rect slot="drawing" stroke="red" />
       </v-annotator>
+      <v-btn @click="test_function">test somthing</v-btn>
     </v-content>
   </v-app>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import VAnnotator from "vue-annotator";
+
 export default {
   name: "App",
 
@@ -51,8 +54,20 @@ export default {
   },
 
   data: () => ({
-    //
-  })
+    url: "http://localhost:5001/photos/img_1.jpg"
+  }),
+
+  methods: {
+    ...mapActions(["load_id_list", "load_photo_url_by_id"]),
+    async test_function() {
+      await this.load_id_list();
+      let id = this.$store.state.id_list[1];
+      console.log(id, this.$store.state);
+      await this.load_photo_url_by_id(id);
+      this.url = this.$store.getters.photo_url_by_id(id);
+      console.log(this.url, this.$store.state);
+    }
+  }
 };
 </script>
 
