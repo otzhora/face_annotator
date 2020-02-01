@@ -1,10 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
+    <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -27,34 +23,42 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
+      <v-btn href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank" text>
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <v-annotator>
+        <img draggable="false" src="http://localhost:5001/photos/img_1.jpg" />
+
+        <rect slot="annotation" stroke="red" x="20" y="20" width="50" height="50" />
+
+        <rect slot="drawing" stroke="red" />
+      </v-annotator>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
+import VAnnotator from "vue-annotator";
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    HelloWorld,
+    VAnnotator
   },
 
   data: () => ({
     //
-  }),
+  })
 };
 </script>
+
+<style scoped>
+rect,
+polygon {
+  fill-opacity: 0;
+}
+</style>
