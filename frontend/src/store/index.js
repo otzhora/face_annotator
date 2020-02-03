@@ -15,11 +15,35 @@ export default new Vuex.Store({
     manager: new Manager(url),
     id_list: [],
     photo_urls: {},
-    photo_annos: {}
+    photo_annos: {},
+    selected_id: ""
   },
   getters: {
     photo_url_by_id: state => id => {
       return `${state.server_url}/${state.photo_urls[id]}`;
+    },
+    url_for_selected_photo: state => {
+      return `${state.server_url}/${state.photo_urls[state.selected_id]}`;
+    },
+    anno_for_selected_photo: state => {
+      if (state.selected_id == "")
+        return [{ name: "", x: 0, y: 0, width: 0, heigth: 0 }];
+
+      let anno = state.photo_annos[state.selected_id];
+      let result = [];
+
+      for (let item of anno) {
+        let name = Object.keys(item)[0];
+        result.push({
+          name,
+          x: item[name][3],
+          y: item[name][0],
+          width: item[name][1] - item[name][3],
+          heigth: item[name][2] - item[name][0]
+        });
+      }
+
+      return result;
     }
   },
   mutations: {
@@ -31,6 +55,9 @@ export default new Vuex.Store({
     },
     UPDATE_PHOTO_ANNO_BY_ID(state, payload) {
       state.photo_annos[payload.id] = payload.photo_anno;
+    },
+    CHANGE_SELECTED_ID(state, new_id) {
+      state.selected_id = new_id;
     }
   },
   actions: {
@@ -46,8 +73,15 @@ export default new Vuex.Store({
     async load_photo_anno_by_id({ state, commit }, id) {
       commit("UPDATE_PHOTO_ANNO_BY_ID", {
         id,
-        photo_anno: await state.manager.get_photo_anno_by_id(id)
+        photo_anno: await state.manager.get_annotations_by_id(id)
       });
+    },
+    async load_photo_info_by_id({ dispatch }, id) {
+      await dispatch("load_photo_url_by_id", id);
+      await dispatch("load_photo_anno_by_id", id);
+    },
+    change_selected_id({ commit }, new_id) {
+      commit("CHANGE_SELECTED_ID", new_id);
     }
   },
   modules: {}
