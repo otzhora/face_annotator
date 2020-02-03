@@ -30,14 +30,24 @@
     </v-app-bar>
 
     <v-content>
-      <v-annotator>
-        <img draggable="false" :src="url" />
+      <div class="container" v-if="!loading">
+        <v-annotator @move-end="annoChanged" @resize-end="annoChanged">
+          <img draggable="false" :src="url" />
 
-        <rect slot="annotation" stroke="red" x="20" y="20" width="50" height="50" />
+          <rect
+            slot="annotation"
+            stroke="red"
+            v-for="(item, index) in anno_for_selected_photo"
+            :key="index"
+            :x="item.x"
+            :y="item.y"
+            :width="item.width"
+            :height="item.heigth"
+          />
 
-        <rect slot="drawing" stroke="red" />
-      </v-annotator>
-      <v-btn @click="test_function">test somthing</v-btn>
+          <rect slot="drawing" stroke="red" />
+        </v-annotator>
+      </div>
     </v-content>
   </v-app>
 </template>
@@ -54,19 +64,51 @@ export default {
   },
 
   data: () => ({
-    url: "http://localhost:5001/photos/img_1.jpg"
+    loading: true
   }),
 
   methods: {
-    ...mapActions(["load_id_list", "load_photo_url_by_id"]),
-    async test_function() {
+    ...mapActions([
+      "load_id_list",
+      "load_photo_url_by_id",
+      "load_photo_anno_by_id",
+      "load_photo_info_by_id",
+      "change_selected_id"
+    ]),
+    async load_photos() {
       await this.load_id_list();
-      let id = this.$store.state.id_list[1];
-      console.log(id, this.$store.state);
-      await this.load_photo_url_by_id(id);
-      this.url = this.$store.getters.photo_url_by_id(id);
-      console.log(this.url, this.$store.state);
+      for (let id of this.$store.state.id_list) {
+        await this.load_photo_info_by_id(id);
+      }
+
+      let id = this.$store.state.id_list[0];
+      this.change_selected_id(id);
+      console.log(this.$store.state);
+      this.loading = false;
+    },
+    annoChanged(e) {
+      let attr = e.node.attributes;
+      console.log(attr.x);
     }
+  },
+
+  computed: {
+    anno_for_selected_photo: {
+      get: function() {
+        console.log(this.$store.getters.anno_for_selected_photo);
+        return this.$store.getters.anno_for_selected_photo;
+      },
+      set: function(new_val) {
+        console.log(new_val);
+      }
+    },
+    url: function() {
+      return this.$store.getters.url_for_selected_photo;
+    }
+  },
+  created() {
+    this.loading = true;
+    this.load_photos();
   }
 };
 </script>
