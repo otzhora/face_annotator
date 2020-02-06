@@ -43,6 +43,8 @@
             :y="item.y"
             :width="item.width"
             :height="item.heigth"
+            :name="item.name"
+            :index="index"
           />
 
           <rect slot="drawing" stroke="red" />
@@ -73,7 +75,8 @@ export default {
       "load_photo_url_by_id",
       "load_photo_anno_by_id",
       "load_photo_info_by_id",
-      "change_selected_id"
+      "change_selected_id",
+      "update_selected_photo_anno"
     ]),
     async load_photos() {
       await this.load_id_list();
@@ -83,23 +86,28 @@ export default {
 
       let id = this.$store.state.id_list[0];
       this.change_selected_id(id);
-      console.log(this.$store.state);
       this.loading = false;
     },
     annoChanged(e) {
       let attr = e.node.attributes;
-      console.log(attr.x);
+      this.update_selected_photo_anno({
+        x: attr.x.value,
+        y: attr.y.value,
+        width: attr.width.value,
+        height: attr.height.value,
+        name: attr.name.value,
+        index: attr.index.value
+      });
     }
   },
 
   computed: {
     anno_for_selected_photo: {
       get: function() {
-        console.log(this.$store.getters.anno_for_selected_photo);
         return this.$store.getters.anno_for_selected_photo;
       },
-      set: function(new_val) {
-        console.log(new_val);
+      set: function() {
+        return;
       }
     },
     url: function() {
