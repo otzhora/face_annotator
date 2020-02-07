@@ -84,7 +84,6 @@ export default new Vuex.Store({
       commit("CHANGE_SELECTED_ID", new_id);
     },
     async update_selected_photo_anno({ state, dispatch }, anno) {
-      console.log("state before", state.photo_annos[state.selected_id]);
       let new_anno = state.photo_annos[state.selected_id];
       if (Object.keys(new_anno[Number(anno.index)])[0] == anno.name) {
         new_anno[Number(anno.index)] = {
@@ -96,11 +95,9 @@ export default new Vuex.Store({
           ]
         };
       }
-      console.log("new_anno", new_anno);
-      console.log("anno", anno);
+
       await state.manager.update_annotations_by_id(state.selected_id, new_anno);
       await dispatch("load_photo_anno_by_id", state.selected_id);
-      console.log("state after", state.photo_annos[state.selected_id]);
     }
   },
   modules: {}
