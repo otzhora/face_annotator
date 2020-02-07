@@ -2,11 +2,11 @@
   <div>
     <div class="container">
       <div
-        class="annotation_container"
+        class="d-flex flex-column mb-6"
         v-for="(anno, index) in anno_for_seleted_photo"
         :key="index"
       >
-        <div class="input_container">
+        <div class="d-flex justify-md-space-between">
           <label :for="'input_name'+String(index)">name:</label>
           <input
             type="text"
@@ -16,7 +16,7 @@
           />
         </div>
 
-        <div class="input_container">
+        <div class="d-flex justify-md-space-between">
           <label :for="'input_x'+String(index)">x:</label>
           <input
             type="text"
@@ -26,7 +26,7 @@
           />
         </div>
 
-        <div class="input_container">
+        <div class="d-flex justify-md-space-between">
           <label :for="'input_y'+String(index)">y:</label>
           <input
             type="text"
@@ -36,7 +36,7 @@
           />
         </div>
 
-        <div class="input_container">
+        <div class="d-flex justify-md-space-between">
           <label :for="'input_width'+String(index)">width:</label>
           <input
             type="text"
@@ -46,7 +46,7 @@
           />
         </div>
 
-        <div class="input_container">
+        <div class="d-flex justify-md-space-between">
           <label :for="'input_heigth'+String(index)">heigth:</label>
           <input
             type="text"

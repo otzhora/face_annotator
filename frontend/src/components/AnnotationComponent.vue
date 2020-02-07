@@ -1,9 +1,17 @@
 <template>
   <div>
-    <div class="container" v-if="!loading">
-      <AnnotationWindow />
-      <ImageSelector />
-      <SideBar />
+    <div class="container" v-if="!loading" height="100%">
+      <v-row justify="space-around" width="100%" align="start">
+        <v-col cols="8">
+          <AnnotationWindow />
+        </v-col>
+        <v-col cols="4">
+          <SideBar />
+        </v-col>
+      </v-row>
+      <v-row align="end">
+        <ImageSelector />
+      </v-row>
     </div>
   </div>
 </template>
