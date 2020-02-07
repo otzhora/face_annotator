@@ -11,7 +11,7 @@
         :x="item.x"
         :y="item.y"
         :width="item.width"
-        :height="item.heigth"
+        :height="item.height"
         :name="item.name"
         :index="index"
       />

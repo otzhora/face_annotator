@@ -39,7 +39,7 @@ export default new Vuex.Store({
           x: item[name][3],
           y: item[name][0],
           width: item[name][1] - item[name][3],
-          heigth: item[name][2] - item[name][0]
+          height: item[name][2] - item[name][0]
         });
       }
 
@@ -85,19 +85,19 @@ export default new Vuex.Store({
     },
     async update_selected_photo_anno({ state, dispatch }, anno) {
       let new_anno = state.photo_annos[state.selected_id];
-      if (Object.keys(new_anno[Number(anno.index)])[0] == anno.name) {
-        new_anno[Number(anno.index)] = {
-          [anno.name]: [
-            Number(anno.y),
-            Number(anno.x) + Number(anno.width),
-            Number(anno.height) + Number(anno.y),
-            Number(anno.x)
-          ]
-        };
-      }
 
+      new_anno[Number(anno.index)] = {
+        [anno.name]: [
+          Number(anno.y),
+          Number(anno.x) + Number(anno.width),
+          Number(anno.height) + Number(anno.y),
+          Number(anno.x)
+        ]
+      };
+      console.log(new_anno);
       await state.manager.update_annotations_by_id(state.selected_id, new_anno);
       await dispatch("load_photo_anno_by_id", state.selected_id);
+      console.log(state.photo_annos);
     }
   },
   modules: {}
