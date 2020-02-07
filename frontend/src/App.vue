@@ -37,6 +37,7 @@
 
 <script>
 import AnnotationComponent from "./components/AnnotationComponent";
+
 export default {
   name: "App",
 

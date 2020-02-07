@@ -2,6 +2,7 @@
   <div>
     <div class="container" v-if="!loading">
       <AnnotationWindow />
+      <ImageSelector />
     </div>
   </div>
 </template>
@@ -9,11 +10,13 @@
 <script>
 import { mapActions } from "vuex";
 import AnnotationWindow from "./AnnotationWindow";
+import ImageSelector from "./ImageSelector";
 
 export default {
   name: "AnnotationComponent",
   components: {
-    AnnotationWindow
+    AnnotationWindow,
+    ImageSelector
   },
   data: () => ({
     loading: true
