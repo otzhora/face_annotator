@@ -51,10 +51,10 @@ export default new Vuex.Store({
       state.id_list = payload.id_list;
     },
     UPDATE_PHOTO_URL_BY_ID(state, payload) {
-      state.photo_urls[payload.id] = payload.photo_url;
+      Vue.set(state.photo_urls, payload.id, payload.photo_url);
     },
     UPDATE_PHOTO_ANNO_BY_ID(state, payload) {
-      state.photo_annos[payload.id] = payload.photo_anno;
+      Vue.set(state.photo_annos, payload.id, payload.photo_anno);
     },
     CHANGE_SELECTED_ID(state, new_id) {
       state.selected_id = new_id;
@@ -94,10 +94,9 @@ export default new Vuex.Store({
           Number(anno.x)
         ]
       };
-      console.log(new_anno);
+
       await state.manager.update_annotations_by_id(state.selected_id, new_anno);
       await dispatch("load_photo_anno_by_id", state.selected_id);
-      console.log(state.photo_annos);
     }
   },
   modules: {}

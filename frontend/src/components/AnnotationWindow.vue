@@ -33,9 +33,6 @@ export default {
     anno_for_selected_photo: {
       get: function() {
         return this.$store.getters.anno_for_selected_photo;
-      },
-      set: function() {
-        return;
       }
     },
     url: function() {
