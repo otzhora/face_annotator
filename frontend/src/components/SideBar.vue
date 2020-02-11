@@ -57,6 +57,7 @@
         </div>
       </div>
     </div>
+    <v-btn @click="add_new_anno">add new anno</v-btn>
   </div>
 </template>
 
@@ -124,6 +125,16 @@ export default {
         y: Number(anno.y),
         width: Number(anno.width),
         height: Number(val)
+      });
+    },
+    add_new_anno() {
+      this.$store.dispatch("update_selected_photo_anno", {
+        index: this.anno_for_seleted_photo.length,
+        name: "Sample name",
+        x: 100,
+        y: 100,
+        width: 150,
+        height: 150
       });
     }
   }
