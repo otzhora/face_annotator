@@ -97,6 +97,14 @@ export default new Vuex.Store({
 
       await state.manager.update_annotations_by_id(state.selected_id, new_anno);
       await dispatch("load_photo_anno_by_id", state.selected_id);
+    },
+    async delete_photo_anno({ state, dispatch }, index) {
+      let new_anno = state.photo_annos[state.selected_id];
+
+      new_anno.splice(index, 1);
+
+      await state.manager.update_annotations_by_id(state.selected_id, new_anno);
+      await dispatch("load_photo_anno_by_id", state.selected_id);
     }
   },
   modules: {}

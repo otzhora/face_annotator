@@ -55,6 +55,7 @@
             @change="heigth_change($event.target.value, index)"
           />
         </div>
+        <v-btn @click="delete_anno(index)">delete this anno</v-btn>
       </div>
     </div>
     <v-btn @click="add_new_anno">add new anno</v-btn>
@@ -136,6 +137,9 @@ export default {
         width: 150,
         height: 150
       });
+    },
+    delete_anno(index) {
+      this.$store.dispatch("delete_photo_anno", index);
     }
   }
 };
