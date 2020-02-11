@@ -3,6 +3,16 @@
     <v-annotator @move-end="annoChanged" @resize-end="annoChanged">
       <img draggable="false" :src="url" />
 
+      <div
+        class="overlay"
+        v-for="(item,index) in anno_for_selected_photo"
+        :key="index"
+        :class="{active: isHovered}"
+        :style="{top: item.y+'px', left: item.x+'px'}"
+      >
+        <div class="text">{{item.name}}</div>
+      </div>
+
       <rect
         slot="annotation"
         stroke="red"
@@ -14,6 +24,8 @@
         :height="item.height"
         :name="item.name"
         :index="index"
+        @mousedown="isHovered = false"
+        @mouseup="isHovered = true"
       />
 
       <rect slot="drawing" stroke="red" />
@@ -29,6 +41,7 @@ export default {
   components: {
     VAnnotator
   },
+  data: () => ({ isHovered: true }),
   computed: {
     anno_for_selected_photo: {
       get: function() {
@@ -60,5 +73,16 @@ export default {
 rect,
 polygon {
   fill-opacity: 0;
+}
+
+.overlay {
+  z-index: 100;
+  position: absolute;
+  opacity: 0;
+}
+
+.active {
+  opacity: 1;
+  color: white;
 }
 </style>
