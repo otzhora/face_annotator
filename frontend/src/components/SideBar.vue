@@ -58,7 +58,9 @@
         <v-btn @click="delete_anno(index)">delete this anno</v-btn>
       </div>
     </div>
-    <v-btn @click="add_new_anno">add new anno</v-btn>
+    <div class="add_new_anno">
+      <v-btn @click="add_new_anno">add new anno</v-btn>
+    </div>
   </div>
 </template>
 
@@ -146,4 +148,7 @@ export default {
 </script>
 
 <style scoped>
+.add_new_anno {
+  padding: 12px;
+}
 </style>
