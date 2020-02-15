@@ -1,8 +1,13 @@
 <template>
   <div>
     <vue-custom-scrollbar class="scroll-area">
-      <v-annotator @move-end="annoChanged" @resize-end="annoChanged">
-        <img draggable="false" :src="url" />
+      <v-annotator
+        :height="img_height"
+        :width="img_width"
+        @move-end="annoChanged"
+        @resize-end="annoChanged"
+      >
+        <img @load="test" draggable="false" :src="url" />
 
         <div
           class="overlay"
@@ -46,7 +51,7 @@ export default {
     VAnnotator,
     vueCustomScrollbar
   },
-  data: () => ({ isHovered: true }),
+  data: () => ({ isHovered: true, img_height: 600, img_width: 600 }),
   computed: {
     anno_for_selected_photo: {
       get: function() {
@@ -69,6 +74,10 @@ export default {
         name: attr.name.value,
         index: attr.index.value
       });
+    },
+    test(e) {
+      this.img_height = e.target.height;
+      this.img_width = e.target.width;
     }
   }
 };
