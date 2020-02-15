@@ -1,45 +1,50 @@
 <template>
   <div>
-    <v-annotator @move-end="annoChanged" @resize-end="annoChanged">
-      <img draggable="false" :src="url" />
+    <vue-custom-scrollbar class="scroll-area">
+      <v-annotator @move-end="annoChanged" @resize-end="annoChanged">
+        <img draggable="false" :src="url" />
 
-      <div
-        class="overlay"
-        v-for="(item,index) in anno_for_selected_photo"
-        :key="index"
-        :class="{active: isHovered}"
-        :style="{top: item.y+'px', left: item.x+'px'}"
-      >
-        <div class="text">{{item.name}}</div>
-      </div>
+        <div
+          class="overlay"
+          v-for="(item, index) in anno_for_selected_photo"
+          :key="index"
+          :class="{ active: isHovered }"
+          :style="{ top: item.y + 'px', left: item.x + 'px' }"
+        >
+          <div class="text">{{ item.name }}</div>
+        </div>
 
-      <rect
-        slot="annotation"
-        stroke="red"
-        v-for="(item, index) in anno_for_selected_photo"
-        :key="index"
-        :x="item.x"
-        :y="item.y"
-        :width="item.width"
-        :height="item.height"
-        :name="item.name"
-        :index="index"
-        @mousedown="isHovered = false"
-        @mouseup="isHovered = true"
-      />
+        <rect
+          slot="annotation"
+          stroke="red"
+          v-for="(item, index) in anno_for_selected_photo"
+          :key="index"
+          :x="item.x"
+          :y="item.y"
+          :width="item.width"
+          :height="item.height"
+          :name="item.name"
+          :index="index"
+          @mousedown="isHovered = false"
+          @mouseup="isHovered = true"
+        />
 
-      <rect slot="drawing" stroke="red" />
-    </v-annotator>
+        <rect slot="drawing" stroke="red" />
+      </v-annotator>
+    </vue-custom-scrollbar>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import VAnnotator from "vue-annotator";
+import vueCustomScrollbar from "vue-custom-scrollbar";
+
 export default {
   name: "AnnotationWindow",
   components: {
-    VAnnotator
+    VAnnotator,
+    vueCustomScrollbar
   },
   data: () => ({ isHovered: true }),
   computed: {
@@ -84,5 +89,12 @@ polygon {
 .active {
   opacity: 1;
   color: white;
+}
+
+.scroll-area {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 50vh;
 }
 </style>
