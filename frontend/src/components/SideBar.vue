@@ -7,51 +7,51 @@
         :key="index"
       >
         <div class="d-flex justify-md-space-between">
-          <label :for="'input_name'+String(index)">name:</label>
+          <label :for="'input_name' + String(index)">name:</label>
           <input
             type="text"
-            :id="'input_name'+String(index)"
+            :id="'input_name' + String(index)"
             :value="anno.name"
             @change="name_change($event.target.value, index)"
           />
         </div>
 
         <div class="d-flex justify-md-space-between">
-          <label :for="'input_x'+String(index)">x:</label>
+          <label :for="'input_x' + String(index)">x:</label>
           <input
             type="text"
-            :id="'input_x'+String(index)"
-            :value="anno.x"
-            @change="x_change($event.target.value,index)"
+            :id="'input_x' + String(index)"
+            :value="Math.round(anno.x)"
+            @change="x_change($event.target.value, index)"
           />
         </div>
 
         <div class="d-flex justify-md-space-between">
-          <label :for="'input_y'+String(index)">y:</label>
+          <label :for="'input_y' + String(index)">y:</label>
           <input
             type="text"
-            :id="'input_y'+String(index)"
-            :value="anno.y"
-            @change="y_change($event.target.value,index)"
+            :id="'input_y' + String(index)"
+            :value="Math.round(anno.y)"
+            @change="y_change($event.target.value, index)"
           />
         </div>
 
         <div class="d-flex justify-md-space-between">
-          <label :for="'input_width'+String(index)">width:</label>
+          <label :for="'input_width' + String(index)">width:</label>
           <input
             type="text"
-            :id="'input_width'+String(index)"
-            :value="anno.width"
+            :id="'input_width' + String(index)"
+            :value="Math.round(anno.width)"
             @change="width_change($event.target.value, index)"
           />
         </div>
 
         <div class="d-flex justify-md-space-between">
-          <label :for="'input_heigth'+String(index)">heigth:</label>
+          <label :for="'input_heigth' + String(index)">heigth:</label>
           <input
             type="text"
-            :id="'input_heigth'+String(index)"
-            :value="anno.height"
+            :id="'input_heigth' + String(index)"
+            :value="Math.round(anno.height)"
             @change="heigth_change($event.target.value, index)"
           />
         </div>
