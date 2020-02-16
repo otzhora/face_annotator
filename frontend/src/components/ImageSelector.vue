@@ -42,7 +42,7 @@ img {
 }
 
 img:last-of-type {
-  padding-right: 0px;
+  padding-right: 0px !important;
 }
 
 .scroll-area {
