@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="container" v-if="!loading" height="100%">
-      <v-row justify="space-around" width="100%" align="start">
+    <div class="container ma-0" v-if="!loading" height="100%" width="100%">
+      <v-row justify="space-between" width="100%" align="start">
         <v-col cols="8">
           <AnnotationWindow />
         </v-col>
@@ -9,7 +9,7 @@
           <SideBar />
         </v-col>
       </v-row>
-      <v-row align="end">
+      <v-row class="bottom_row" align="end">
         <ImageSelector />
       </v-row>
     </div>
@@ -58,4 +58,14 @@ export default {
 </script>
 
 <style>
+.container {
+  max-width: 100% !important;
+}
+
+.bottom_row {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 256px;
+}
 </style>

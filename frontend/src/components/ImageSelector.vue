@@ -38,7 +38,11 @@ export default {
 
 img {
   max-height: 100%;
-  padding-right: 50px;
+  padding-right: 50px !important;
+}
+
+img:last-of-type {
+  padding-right: 0px;
 }
 
 .scroll-area {
