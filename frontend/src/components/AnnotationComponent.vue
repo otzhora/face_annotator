@@ -64,7 +64,7 @@ export default {
 
 .bottom_row {
   position: fixed;
-  bottom: 0px;
+  bottom: 20px;
   width: 100%;
   height: 256px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <vue-custom-scrollbar class="scroll-area">
       <v-annotator
         :height="img_height"
@@ -34,7 +34,7 @@
           @mouseup="isHovered = true"
         />
 
-        <rect slot="drawing" stroke="red" />
+        <rect slot="drawing" stroke="yellow" />
       </v-annotator>
     </vue-custom-scrollbar>
   </div>
@@ -93,6 +93,7 @@ polygon {
   z-index: 100;
   position: absolute;
   opacity: 0;
+  font-size: 20px;
 }
 
 .active {
@@ -105,5 +106,13 @@ polygon {
   margin: auto;
   width: 100%;
   height: 50vh;
+  padding: 0px;
+}
+
+.container {
+  background-color: rgb(28, 30, 45);
+  height: 100%;
+  display: flex;
+  padding: 0px;
 }
 </style>

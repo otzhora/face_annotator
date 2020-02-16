@@ -50,5 +50,8 @@ img:last-of-type {
   margin: auto;
   width: 100%;
   height: 25vh;
+  background-color: rgb(28, 30, 45);
+  border-radius: 20px;
+  margin: 20px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-app margin="0">
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
+    <v-app-bar app color="#222339">
+      <div class="d-flex align-center app_bar">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
@@ -28,12 +28,12 @@
         target="_blank"
         text
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2 app-bar-text">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
 
-    <v-content class="ma-0">
+    <v-content class="ma-0 content">
       <AnnotationComponent />
     </v-content>
   </v-app>
@@ -50,3 +50,13 @@ export default {
   }
 };
 </script>
+
+<style>
+.content {
+  background-color: #181937;
+}
+
+.app-bar-text {
+  color: #ffffff;
+}
+</style>

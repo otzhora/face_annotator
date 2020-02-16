@@ -55,11 +55,15 @@
             @change="heigth_change($event.target.value, index)"
           />
         </div>
-        <v-btn @click="delete_anno(index)">delete this anno</v-btn>
+        <v-btn @click="delete_anno(index)" color="rgb(95, 65, 252)">
+          <div class="button_text">delete this anno</div>
+        </v-btn>
       </div>
-    </div>
-    <div class="add_new_anno">
-      <v-btn @click="add_new_anno">add new anno</v-btn>
+      <div class="add_new_anno">
+        <v-btn @click="add_new_anno" color="rgb(95, 65, 252)">
+          <div class="button_text">add new anno</div>
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -150,5 +154,15 @@ export default {
 <style scoped>
 .add_new_anno {
   padding: 12px;
+}
+
+.container {
+  color: #ffffff;
+  background-color: rgb(34, 35, 57);
+  border-radius: 20px;
+}
+
+.button_text {
+  color: #ffffff;
 }
 </style>
