@@ -53,7 +53,7 @@ export default {
 
 <style>
 .content {
-  background-color: #181937;
+  background-color: rgb(18, 19, 37);
 }
 
 .app-bar-text {
