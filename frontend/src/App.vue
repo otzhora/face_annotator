@@ -24,7 +24,7 @@
       <v-row class="nav_list" justify="start">
         <v-col class="sm">
           <div class="button_container">
-            <v-btn to="/home" class="x-large">
+            <v-btn to="/" class="x-large">
               <div class="nav_link">Home</div>
             </v-btn>
           </div>
