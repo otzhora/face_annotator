@@ -2,22 +2,16 @@
   <div class="container d-flex  align-center justify-center">
     <div>
       <div>
-        <v-btn> Хост </v-btn>
+        <v-btn to="/host"> Хост </v-btn>
       </div>
       <div>
-        <v-btn> Клиент </v-btn>
+        <v-btn to="/annotations"> Клиент </v-btn>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-/*    <v-col align-self="center" class="container">
-      <v-row justify="space-around" align-self="center"> test </v-row>
-      <v-row justify="space-around" align-self="center"> sas</v-row>
-    </v-col>
-*/
-
 export default {
   data() {
     return {};

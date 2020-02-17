@@ -25,14 +25,23 @@
         <v-col class="sm">
           <div class="button_container">
             <v-btn to="/" class="x-large">
-              <div class="nav_link">Home</div>
+              <div class="nav_link">Домой</div>
             </v-btn>
           </div>
         </v-col>
+
+        <v-col>
+          <div class="button_container">
+            <v-btn to="/host" class="x-small">
+              <div class="nav_link">Хост</div>
+            </v-btn>
+          </div>
+        </v-col>
+
         <v-col>
           <div class="button_container">
             <v-btn to="/annotations" class="x-small">
-              <div class="nav_link">Annotations</div>
+              <div class="nav_link">Клиент</div>
             </v-btn>
           </div>
         </v-col>

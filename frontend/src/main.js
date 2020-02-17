@@ -9,10 +9,12 @@ import VueRouter from "vue-router";
 
 import AnnotationComponent from "./components/AnnotationComponent";
 import Home from "./components/Home";
+import HostComponent from "./components/HostComponent";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 const router = new VueRouter({
+  mode: "history",
   routes: [
     {
       path: "/",
@@ -23,6 +25,11 @@ const router = new VueRouter({
       path: "/annotations",
       name: "annotations",
       component: AnnotationComponent
+    },
+    {
+      path: "/host",
+      name: "host",
+      component: HostComponent
     }
   ]
 });
