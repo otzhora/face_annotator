@@ -21,6 +21,23 @@
         />
       </div>
 
+      <v-row class="nav_list" justify="start">
+        <v-col class="sm">
+          <div class="button_container">
+            <v-btn to="/home" class="x-large">
+              <div class="nav_link">Home</div>
+            </v-btn>
+          </div>
+        </v-col>
+        <v-col>
+          <div class="button_container">
+            <v-btn to="/annotations" class="x-small">
+              <div class="nav_link">Annotations</div>
+            </v-btn>
+          </div>
+        </v-col>
+      </v-row>
+
       <v-spacer></v-spacer>
 
       <v-btn
@@ -33,21 +50,15 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content class="ma-0 content">
-      <AnnotationComponent />
-    </v-content>
+    <v-content class="ma-0 content"> <router-view></router-view> </v-content>
   </v-app>
 </template>
 
 <script>
-import AnnotationComponent from "./components/AnnotationComponent";
-
 export default {
   name: "App",
 
-  components: {
-    AnnotationComponent
-  }
+  components: {}
 };
 </script>
 
@@ -58,5 +69,16 @@ export default {
 
 .app-bar-text {
   color: #ffffff;
+}
+
+.nav_list {
+  display: flex;
+  justify-items: space-between;
+  width: 15%;
+}
+
+.button_container {
+  display: flex;
+  justify-content: center;
 }
 </style>
