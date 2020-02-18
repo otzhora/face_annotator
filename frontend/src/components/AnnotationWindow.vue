@@ -105,7 +105,7 @@ polygon {
   position: relative;
   margin: auto;
   width: 100%;
-  height: 50vh;
+  height: 65vh;
   padding: 0px;
 }
 
