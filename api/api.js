@@ -9,9 +9,13 @@ const port = Number(process.env.SERVER_PORT) || 5001;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("data"));
 
-const Manager = require("./data_manager_json");
+const data_path = process.env.DATA_PATH || "data";
+app.use(express.static(data_path));
+
+
+const manager_type = process.env.MANAGER_TYPE || "./data_manager_json";
+const Manager = require(manager_type);
 const manager = new Manager(true);
 
 manager.load_annotations().then(() => {
